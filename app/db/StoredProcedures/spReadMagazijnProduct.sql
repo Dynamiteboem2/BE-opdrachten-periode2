@@ -2,8 +2,8 @@
 -- Doel: Ophalen van alle records uit de tabel Magazijn
 *******************************************************
 -- Versie:  01
--- Datum:   26-09-2024
--- Auteur:  Arjan de Ruijter
+-- Datum:   13-11-2024
+-- Auteur:  Daniël van Grol
 ******************************************************/
 
 -- Selecteer de juiste database voor je stored procedure

@@ -38,7 +38,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (is_null($data['allergenen'])) { ?>
+                        <?php if (is_null($data['llergenen'])) { ?>
                             <tr>
                                 <td class='text-center'>Geen allergeneninformatie beschikbaar</td>
                             </tr>
