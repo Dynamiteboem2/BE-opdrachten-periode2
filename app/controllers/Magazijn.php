@@ -95,7 +95,8 @@ class Magazijn extends BaseController
             $result = $this->magazijnModel->getAllergenenInfoByProductId($productId);
 
             if (empty($result)) {
-                $data['message'] = "Geen allergeneninformatie beschikbaar voor dit product.";
+                $data['message'] = "In dit product
+zitten geen stoffen die een allergische reactie kunnen veroorzaken";
             } else {
                 $data['allergenen'] = $result;
             }
