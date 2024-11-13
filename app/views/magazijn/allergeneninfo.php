@@ -15,6 +15,11 @@
                 </div>
             </div>
         </div>
+        <script>
+            setTimeout(function() {
+                window.location.href = '<?= URLROOT; ?>/magazijn/index';
+            }, 4000);
+        </script>
     <?php } else { ?>
         <div class="row mt-3">
             <div class="col-12">
@@ -37,6 +42,11 @@
                             <tr>
                                 <td class='text-center'>Geen allergeneninformatie beschikbaar</td>
                             </tr>
+                            <script>
+                                setTimeout(function() {
+                                    window.location.href = '<?= URLROOT; ?>/magazijn/index';
+                                }, 4000);
+                            </script>
                         <?php } else {                              
                             foreach ($data['allergenen'] as $allergeen) { ?>
                                 <tr>
