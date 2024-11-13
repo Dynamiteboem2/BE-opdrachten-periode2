@@ -36,4 +36,36 @@ class Magazijn extends BaseController
 
         $this->view('magazijn/index', $data);
     }
+
+    public function leveringInfo($productId)
+    {
+        $data = [
+            'title' => 'Levering Informatie',
+            'leveringen' => NULL,
+            'leverancier' => NULL
+        ];
+
+        try {
+            $result = $this->magazijnModel->getLeveringInfoByProductId($productId);
+
+            if (empty($result)) {
+                throw new Exception("Geen leveringsinformatie gevonden");
+            }
+
+            $data['leveringen'] = $result;
+            $data['leverancier'] = [
+                'Naam' => $result[0]->LeverancierNaam,
+                'Contactpersoon' => $result[0]->Contactpersoon,
+                'Leveranciernummer' => $result[0]->Leveranciernummer,
+                'Mobiel' => $result[0]->Mobiel
+            ];
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            $data['message'] = "Er is een fout opgetreden in de database: " . $e->getMessage();
+            $data['messageColor'] = "danger";
+            $data['messageVisibility'] = "flex";
+        }
+
+        $this->view('magazijn/leveringinfo', $data);
+    }
 }
