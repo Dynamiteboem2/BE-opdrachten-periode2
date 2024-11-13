@@ -37,4 +37,17 @@ class MagazijnModel
             throw new Exception("Database query failed: " . $e->getMessage());
         }
     }
+
+    public function getProductVoorraad($productId)
+    {
+        try {
+            $sql = "SELECT AantalAanwezig FROM Magazijn WHERE ProductId = :productId";
+            $this->db->query($sql);
+            $this->db->bind(':productId', $productId);
+            return $this->db->single();
+        } catch (Exception $e) {
+            error_log("Fout in getProductVoorraad: " . $e->getMessage());
+            throw new Exception("Database query failed: " . $e->getMessage());
+        }
+    }
 }

@@ -42,23 +42,31 @@ class Magazijn extends BaseController
         $data = [
             'title' => 'Levering Informatie',
             'leveringen' => NULL,
-            'leverancier' => NULL
+            'leverancier' => NULL,
+            'message' => NULL
         ];
 
         try {
-            $result = $this->magazijnModel->getLeveringInfoByProductId($productId);
+            $voorraad = $this->magazijnModel->getProductVoorraad($productId);
 
-            if (empty($result)) {
-                throw new Exception("Geen leveringsinformatie gevonden");
+            if ($voorraad->AantalAanwezig == 0) {
+                $data['message'] = "Er is van dit product op dit moment geen voorraad aanwezig, de verwachte eerstvolgende levering is: 30-04-2023";
+                header("refresh:4;url=" . URLROOT . "/magazijn/index");
+            } else {
+                $result = $this->magazijnModel->getLeveringInfoByProductId($productId);
+
+                if (empty($result)) {
+                    throw new Exception("Geen leveringsinformatie gevonden");
+                }
+
+                $data['leveringen'] = $result;
+                $data['leverancier'] = [
+                    'Naam' => $result[0]->LeverancierNaam,
+                    'Contactpersoon' => $result[0]->Contactpersoon,
+                    'Leveranciernummer' => $result[0]->Leveranciernummer,
+                    'Mobiel' => $result[0]->Mobiel
+                ];
             }
-
-            $data['leveringen'] = $result;
-            $data['leverancier'] = [
-                'Naam' => $result[0]->LeverancierNaam,
-                'Contactpersoon' => $result[0]->Contactpersoon,
-                'Leveranciernummer' => $result[0]->Leveranciernummer,
-                'Mobiel' => $result[0]->Mobiel
-            ];
         } catch (Exception $e) {
             error_log($e->getMessage());
             $data['message'] = "Er is een fout opgetreden in de database: " . $e->getMessage();

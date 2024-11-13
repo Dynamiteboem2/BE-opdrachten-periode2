@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS country (
 -- Gegevens worden geëxporteerd voor tabel `country`
 INSERT INTO `country` (`Id`, `Name`, `CapitalCity`, `Continent`, `Population`, `Zipcode`) VALUES
 (1, 'Nederland', 'Amsterdam', 'Europa', 18000000, '2309CB'),
-(2, 'Argentini&euml;', 'Buenos Aires', 'Zuid-Amerika', 4294967294, '2309CC'),
+(2, 'Argentini&euml;', 'Buenos Aires', 'Zuid-Amerika', 429496729, '2309CC'),
 (4, 'Japan', 'Tokio', 'Azi&euml;', 125700000, '8761EE'),
 (5, 'Zwitserlandd', 'Bern', 'Europa', 8703000, '2345RR'),
 (6, 'Noorwegen', 'Oslo', 'Europa', 5550203, '2314UT'),
@@ -103,7 +103,7 @@ INSERT INTO `Magazijn` (`ProductId`, `VerpakkingsEenheid`, `AantalAanwezig`, `Is
 (7, 1, 795, 1, NULL, SYSDATE(6), SYSDATE(6)),
 (8, 10, 233, 1, NULL, SYSDATE(6), SYSDATE(6)),
 (9, 2.5, 123, 1, NULL, SYSDATE(6), SYSDATE(6)),
-(10, 3, 0, 1, NULL, SYSDATE(6), SYSDATE(6)),
+(10, 3, 0, 1, NULL, SYSDATE(6), SYSDATE(6)), -- Winegums
 (11, 2, 367, 1, NULL, SYSDATE(6), SYSDATE(6)),
 (12, 1, 467, 1, NULL, SYSDATE(6), SYSDATE(6)),
 (13, 5, 20, 1, NULL, SYSDATE(6), SYSDATE(6));
@@ -185,7 +185,8 @@ BEGIN
     FROM 
         Magazijn m
     JOIN 
-        Product p ON m.ProductId = p.Id;
+        Product p ON m.ProductId = p.Id
+    ORDER BY p.Barcode ASC;
 END //
 DELIMITER ;
 
