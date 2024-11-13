@@ -50,4 +50,34 @@ class MagazijnModel
             throw new Exception("Database query failed: " . $e->getMessage());
         }
     }
+
+    public function getAllergenenInfoByProductId($productId)
+    {
+        try {
+            $sql = "SELECT a.* 
+                    FROM Allergeen a
+                    JOIN ProductPerAllergeen pa ON a.Id = pa.AllergeenId
+                    WHERE pa.ProductId = :productId
+                    ORDER BY a.Naam ASC";
+            $this->db->query($sql);
+            $this->db->bind(':productId', $productId);
+            return $this->db->resultSet();
+        } catch (Exception $e) {
+            error_log("Fout in getAllergenenInfoByProductId: " . $e->getMessage());
+            throw new Exception("Database query failed: " . $e->getMessage());
+        }
+    }
+
+    public function getProductDetails($productId)
+    {
+        try {
+            $sql = "SELECT Naam, Barcode FROM Product WHERE Id = :productId";
+            $this->db->query($sql);
+            $this->db->bind(':productId', $productId);
+            return $this->db->single();
+        } catch (Exception $e) {
+            error_log("Fout in getProductDetails: " . $e->getMessage());
+            throw new Exception("Database query failed: " . $e->getMessage());
+        }
+    }
 }

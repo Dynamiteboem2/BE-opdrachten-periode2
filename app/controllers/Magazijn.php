@@ -76,4 +76,37 @@ class Magazijn extends BaseController
 
         $this->view('magazijn/leveringinfo', $data);
     }
+
+    public function allergenenInfo($productId)
+    {
+        $data = [
+            'title' => 'Overzicht Allergenen',
+            'allergenen' => NULL,
+            'product' => NULL,
+            'message' => NULL
+        ];
+
+        try {
+            $productDetails = $this->magazijnModel->getProductDetails($productId);
+            if (!$productDetails) {
+                throw new Exception("Geen productinformatie gevonden");
+            }
+
+            $result = $this->magazijnModel->getAllergenenInfoByProductId($productId);
+
+            if (empty($result)) {
+                throw new Exception("Geen allergeneninformatie gevonden");
+            }
+
+            $data['allergenen'] = $result;
+            $data['product'] = $productDetails;
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            $data['message'] = "Er is een fout opgetreden in de database: " . $e->getMessage();
+            $data['messageColor'] = "danger";
+            $data['messageVisibility'] = "flex";
+        }
+
+        $this->view('magazijn/allergeneninfo', $data);
+    }
 }

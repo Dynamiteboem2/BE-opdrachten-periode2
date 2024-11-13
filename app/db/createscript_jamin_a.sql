@@ -77,6 +77,48 @@ INSERT INTO `Product` (`Naam`, `Barcode`, `Verpakkingseenheid`, `IsActief`, `Opm
 ('Kruis Drop', '8719587322265', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Zoute Ruitjes', '8719587323256', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6));
 
+-- Tabelstructuur voor tabel `Allergeen`
+DROP TABLE IF EXISTS Allergeen;
+CREATE TABLE IF NOT EXISTS Allergeen (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Naam` VARCHAR(50) NOT NULL,
+  `Omschrijving` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Gegevens worden geëxporteerd voor tabel `Allergeen`
+INSERT INTO `Allergeen` (`Id`, `Naam`, `Omschrijving`) VALUES
+(1, 'Gluten', 'Dit product bevat gluten'),
+(2, 'Gelatine', 'Dit product bevat gelatine'),
+(3, 'AZO-Kleurstof', 'Dit product bevat AZO-kleurstoffen'),
+(4, 'Lactose', 'Dit product bevat lactose'),
+(5, 'Soja', 'Dit product bevat soja');
+
+-- Tabelstructuur voor tabel `ProductPerAllergeen`
+DROP TABLE IF EXISTS ProductPerAllergeen;
+CREATE TABLE IF NOT EXISTS ProductPerAllergeen (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `ProductId` INT NOT NULL,
+  `AllergeenId` INT NOT NULL,
+  PRIMARY KEY (`Id`),
+  FOREIGN KEY (`AllergeenId`) REFERENCES `Allergeen`(`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Gegevens worden geëxporteerd voor tabel `ProductPerAllergeen`
+INSERT INTO `ProductPerAllergeen` (`Id`, `ProductId`, `AllergeenId`) VALUES
+(1, 1, 2),
+(2, 1, 1),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 9, 2),
+(7, 9, 5),
+(8, 10, 2),
+(9, 12, 4),
+(10, 13, 1),
+(11, 13, 4),
+(12, 13, 5);
+
 -- Tabelstructuur voor tabel `Magazijn`
 DROP TABLE IF EXISTS Magazijn;
 CREATE TABLE IF NOT EXISTS Magazijn (
