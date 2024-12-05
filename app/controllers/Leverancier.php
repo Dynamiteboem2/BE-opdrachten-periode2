@@ -45,6 +45,7 @@ class Leverancier extends BaseController
         $data = [
             'title' => 'Geleverde Producten',
             'producten' => NULL,
+            'leverancier' => NULL,
             'message' => NULL
         ];
 
@@ -59,6 +60,7 @@ class Leverancier extends BaseController
             } else {
                 // Zet de opgehaalde data in de data array
                 $data['producten'] = $result;
+                $data['leverancier'] = $this->leverancierModel->getLeverancierById($leverancierId);
             }
         } catch (Exception $e) {
             // Log de fout en zet de foutmelding in de data array
@@ -74,7 +76,7 @@ class Leverancier extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $data = [
                 'id' => $id,
