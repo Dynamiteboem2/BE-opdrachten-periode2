@@ -74,7 +74,7 @@ class Leverancier extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             $data = [
                 'id' => $id,
@@ -96,8 +96,8 @@ class Leverancier extends BaseController
             if (empty($data['aantal_err']) && empty($data['datum_err'])) {
                 // Validated
                 if ($this->leverancierModel->updateProduct($data['id'], $data['aantal'], $data['datum'])) {
-                    flash('levering_message', 'Product levering bijgewerkt');
-                    redirect('leverancier/geleverdeProducten/' . $id);
+                    $this->setFlash('levering_message', 'Product levering bijgewerkt');
+                    $this->redirect('leverancier/geleverdeProducten/' . $id);
                 } else {
                     die('Er is iets misgegaan');
                 }
@@ -120,5 +120,19 @@ class Leverancier extends BaseController
 
             $this->view('leverancier/nieuweLevering', $data);
         }
+    }
+
+    private function setFlash($name, $message)
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+        $_SESSION[$name] = $message;
+    }
+
+    private function redirect($url)
+    {
+        header('Location: ' . URLROOT . '/' . $url);
+        exit();
     }
 }
