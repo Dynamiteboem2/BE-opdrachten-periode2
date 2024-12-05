@@ -41,8 +41,8 @@
                                 <tr>
                                     <td><?= $product->Naam ?></td>
                                     <td><?= $product->AantalAanwezig ?></td>
-                                    <td><?= $product->Verpakkingseenheid ?></td>
-                                    <td><?= $product->DatumLaatsteLevering ?></td>
+                                    <td><?= $product->VerpakkingsEenheid ?></td>
+                                    <td><?= date('d-m-Y', strtotime($product->DatumLaatsteLevering)) ?></td>
                                     <td class='text-center'>
                                         <!-- Knop voor nieuwe levering -->
                                         <a href='<?= URLROOT . "/Leverancier/nieuweLevering/$product->Id" ?>' class='btn btn-success'>

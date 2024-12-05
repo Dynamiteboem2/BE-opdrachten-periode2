@@ -20,6 +20,7 @@ BEGIN
         p.Id,
         p.Naam,
         p.Barcode,
+        m.VerpakkingsEenheid,
         m.AantalAanwezig,
         MAX(pl.DatumLevering) AS DatumLaatsteLevering
     FROM 
@@ -31,7 +32,7 @@ BEGIN
     WHERE 
         pl.LeverancierId = leverancierId
     GROUP BY 
-        p.Id, p.Naam, p.Barcode, m.AantalAanwezig
+        p.Id, p.Naam, p.Barcode, m.VerpakkingsEenheid, m.AantalAanwezig
     ORDER BY 
         m.AantalAanwezig DESC;
 END //
