@@ -57,15 +57,13 @@ class Leverancier extends BaseController
             $leverancier = $this->leverancierModel->getLeverancierById($leverancierId);
 
             if (empty($result)) {
-                // Zet de foutmelding en redirect na 3 seconden
+                // Zet de foutmelding
                 $data['message'] = "Dit bedrijf heeft tot nu toe geen producten geleverd aan Jamin";
-                $data['leverancier'] = $leverancier;
-                header("refresh:3;url=" . URLROOT . "/leverancier/index");
             } else {
                 // Zet de opgehaalde data in de data array
                 $data['producten'] = $result;
-                $data['leverancier'] = $leverancier;
             }
+            $data['leverancier'] = $leverancier;
         } catch (Exception $e) {
             // Log de fout en zet de foutmelding in de data array
             error_log($e->getMessage());
@@ -81,7 +79,7 @@ class Leverancier extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             $data = [
                 'id' => $id,
@@ -98,6 +96,8 @@ class Leverancier extends BaseController
 
             if (empty($data['datum'])) {
                 $data['datum_err'] = 'Vul de datum in';
+            } elseif (strtotime($data['datum']) < strtotime(date('Y-m-d'))) {
+                $data['datum_err'] = 'Deze datum ligt in het verleden, graag een nieuwe datum invoeren';
             }
 
             if (empty($data['aantal_err']) && empty($data['datum_err'])) {
@@ -109,6 +109,10 @@ class Leverancier extends BaseController
                     die('Er is iets misgegaan');
                 }
             } else {
+                // Haal de gegevens van de leverancier op
+                $leverancier = $this->leverancierModel->getLeverancierByProductId($id);
+                $data['leverancier'] = $leverancier;
+
                 // Load view with errors
                 $this->view('leverancier/nieuweLevering', $data);
             }
