@@ -232,8 +232,61 @@ BEGIN
 END //
 DELIMITER ;
 
-COMMIT;
+-- Stored Procedure voor het ophalen van alle leveranciers en het aantal verschillende producten dat zij leveren
+DROP PROCEDURE IF EXISTS spGetAllLeveranciers;
 
+DELIMITER //
+
+CREATE PROCEDURE spGetAllLeveranciers()
+BEGIN
+    SELECT 
+        l.Id,
+        l.Naam,
+        l.Contactpersoon,
+        l.Leveranciernummer,
+        l.Mobiel,
+        COUNT(DISTINCT ppa.ProductId) AS AantalProducten
+    FROM 
+        Leverancier l
+    LEFT JOIN 
+        ProductPerLeverancier ppa ON l.Id = ppa.LeverancierId
+    GROUP BY 
+        l.Id, l.Naam, l.Contactpersoon, l.Leveranciernummer, l.Mobiel
+    ORDER BY 
+        AantalProducten DESC;
+END //
+DELIMITER ;
+
+COMMIT;
+DROP PROCEDURE IF EXISTS spGetGeleverdeProducten;
+
+-- Verander even tijdelijk de opdrachtprompt naar //
+DELIMITER //
+
+CREATE PROCEDURE spGetGeleverdeProducten(IN leverancierId INT)
+BEGIN
+    SELECT 
+        p.Id,
+        p.Naam,
+        p.Barcode,
+        m.AantalAanwezig,
+        MAX(pl.DatumLevering) AS DatumLaatsteLevering
+    FROM 
+        Product p
+    JOIN 
+        ProductPerLeverancier pl ON p.Id = pl.ProductId
+    JOIN 
+        Magazijn m ON p.Id = m.ProductId
+    WHERE 
+        pl.LeverancierId = leverancierId
+    GROUP BY 
+        p.Id, p.Naam, p.Barcode, m.AantalAanwezig
+    ORDER BY 
+        m.AantalAanwezig DESC;
+END //
+DELIMITER ;
+
+COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
