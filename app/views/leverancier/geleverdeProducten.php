@@ -8,6 +8,17 @@
         </div>
     </div>
 
+    <div class="row mt-3">
+        <div class="col-12">
+            <!-- Leverancier informatie weergeven -->
+            <h5>Leverancier Informatie</h5>
+            <p><strong>Naam:</strong> <?= $data['leverancier']->Naam ?></p>
+            <p><strong>Contactpersoon:</strong> <?= $data['leverancier']->Contactpersoon ?></p>
+            <p><strong>Leveringsnummer:</strong> <?= $data['leverancier']->Leveranciernummer ?></p>
+            <p><strong>Mobiel:</strong> <?= $data['leverancier']->Mobiel ?></p>
+        </div>
+    </div>
+
     <?php if ($data['message']) { ?>
         <div class="row mt-3">
             <div class="col-12">
@@ -24,17 +35,6 @@
             }, 3000);
         </script>
     <?php } else { ?>
-        <div class="row mt-3">
-            <div class="col-12">
-                <!-- Leverancier informatie weergeven -->
-                <h5>Leverancier Informatie</h5>
-                <p><strong>Naam:</strong> <?= $data['leverancier']->Naam ?></p>
-                <p><strong>Contactpersoon:</strong> <?= $data['leverancier']->Contactpersoon ?></p>
-                <p><strong>Leveringsnummer:</strong> <?= $data['leverancier']->Leveranciernummer ?></p>
-                <p><strong>Mobiel:</strong> <?= $data['leverancier']->Mobiel ?></p>
-            </div>
-        </div>
-
         <div class="row mt-3">
             <div class="col-12">
                 <!-- Tabel met geleverde producten -->

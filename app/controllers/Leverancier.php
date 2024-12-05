@@ -53,19 +53,24 @@ class Leverancier extends BaseController
             // Haal de geleverde producten van de specifieke leverancier op
             $result = $this->leverancierModel->getGeleverdeProducten($leverancierId);
 
+            // Haal de gegevens van de leverancier op
+            $leverancier = $this->leverancierModel->getLeverancierById($leverancierId);
+
             if (empty($result)) {
                 // Zet de foutmelding en redirect na 3 seconden
                 $data['message'] = "Dit bedrijf heeft tot nu toe geen producten geleverd aan Jamin";
+                $data['leverancier'] = $leverancier;
                 header("refresh:3;url=" . URLROOT . "/leverancier/index");
             } else {
                 // Zet de opgehaalde data in de data array
                 $data['producten'] = $result;
-                $data['leverancier'] = $this->leverancierModel->getLeverancierById($leverancierId);
+                $data['leverancier'] = $leverancier;
             }
         } catch (Exception $e) {
             // Log de fout en zet de foutmelding in de data array
             error_log($e->getMessage());
             $data['message'] = "Er is een fout opgetreden in de database: " . $e->getMessage();
+            $data['leverancier'] = $this->leverancierModel->getLeverancierById($leverancierId);
         }
 
         // Laad de view met de data
