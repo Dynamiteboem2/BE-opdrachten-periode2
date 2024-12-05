@@ -36,7 +36,7 @@
                 <div>
                     <a href="<?= URLROOT; ?>/leverancier/geleverdeProducten/<?= $data['id']; ?>" class="btn btn-secondary">Terug</a>
                     <a href="<?= URLROOT; ?>" class="btn btn-primary">Home</a>
-                </div>
+                </div>    
             </div>
         </div>
     </form>
