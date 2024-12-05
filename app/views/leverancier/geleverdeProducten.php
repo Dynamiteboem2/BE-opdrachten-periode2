@@ -51,7 +51,7 @@
                                     <td><?= date('d-m-Y', strtotime($product->DatumLaatsteLevering)) ?></td>
                                     <td class='text-center'>
                                         <!-- Knop voor nieuwe levering -->
-                                        <a href='<?= URLROOT . "/Leverancier/nieuweLevering/$product->Id" ?>' class='btn btn-success'>
+                                        <a href='<?= URLROOT . "/levering/nieuweLevering/$product->Id" ?>' class='btn btn-success'>
                                             <i class='bi bi-plus-lg'></i>
                                         </a>
                                     </td>
