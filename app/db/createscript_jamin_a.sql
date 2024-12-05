@@ -74,7 +74,7 @@ INSERT INTO `Product` (`Naam`, `Barcode`, `Verpakkingseenheid`, `IsActief`, `Opm
 ('Zoute Rijen', '8719587322739', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Drop Munten', '8719587322345', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Kruis Drop', '8719587322265', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
-('Zoute Ruitjes', '8719587323256', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6));
+('Zoute Ruitjes', '8719587323256', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6));  
 
 -- Tabelstructuur voor tabel `Allergeen`
 DROP TABLE IF EXISTS Allergeen;
