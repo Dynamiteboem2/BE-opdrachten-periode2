@@ -54,6 +54,13 @@ class LeverancierModel
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->bindParam(':aantal', $aantal, PDO::PARAM_INT);
             $stmt->bindParam(':datum', $datum, PDO::PARAM_STR);
+            $stmt->execute();
+
+            // Update de datum van de laatste levering in de ProductPerLeverancier tabel
+            $sql = 'UPDATE ProductPerLeverancier SET DatumLevering = :datum WHERE ProductId = :id';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':datum', $datum, PDO::PARAM_STR);
             return $stmt->execute();
         } catch (Exception $e) {
             // Log de fout en gooi een nieuwe uitzondering

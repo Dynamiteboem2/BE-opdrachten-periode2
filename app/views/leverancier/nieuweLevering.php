@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
             <label for="datum">Datum:</label>
-            <input type="date" name="datum" class="form-control <?= (!empty($data['datum_err'])) ? 'is-invalid' : ''; ?>" value="<?= date('Y-m-d', strtotime($data['datum'])); ?>">
+            <input type="date" name="datum" class="form-control <?= (!empty($data['datum_err'])) ? 'is-invalid' : ''; ?>" value="<?= $data['datum']; ?>">
             <span class="invalid-feedback"><?= $data['datum_err']; ?></span>
         </div>
         <div class="form-group mt-3">
@@ -36,7 +36,7 @@
                 <div>
                     <a href="<?= URLROOT; ?>/leverancier/geleverdeProducten/<?= $data['id']; ?>" class="btn btn-secondary">Terug</a>
                     <a href="<?= URLROOT; ?>" class="btn btn-primary">Home</a>
-                </div>    
+                </div>
             </div>
         </div>
     </form>
