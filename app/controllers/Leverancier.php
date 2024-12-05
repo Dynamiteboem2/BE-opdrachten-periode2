@@ -53,11 +53,13 @@ class Leverancier extends BaseController
             $result = $this->leverancierModel->getGeleverdeProducten($leverancierId);
 
             if (empty($result)) {
-                throw new Exception("Geen resultaten gevonden");
+                // Zet de foutmelding en redirect na 3 seconden
+                $data['message'] = "Dit bedrijf heeft tot nu toe geen producten geleverd aan Jamin";
+                header("refresh:3;url=" . URLROOT . "/leverancier/index");
+            } else {
+                // Zet de opgehaalde data in de data array
+                $data['producten'] = $result;
             }
-
-            // Zet de opgehaalde data in de data array
-            $data['producten'] = $result;
         } catch (Exception $e) {
             // Log de fout en zet de foutmelding in de data array
             error_log($e->getMessage());

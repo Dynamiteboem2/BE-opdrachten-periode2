@@ -17,6 +17,12 @@
                 </div>
             </div>
         </div>
+        <script>
+            // Redirect na 3 seconden
+            setTimeout(function() {
+                window.location.href = '<?= URLROOT; ?>/leverancier/index';
+            }, 3000);
+        </script>
     <?php } else { ?>
         <div class="row mt-3">
             <div class="col-12">

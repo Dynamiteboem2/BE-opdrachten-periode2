@@ -72,7 +72,6 @@ INSERT INTO `Product` (`Naam`, `Barcode`, `Verpakkingseenheid`, `IsActief`, `Opm
 ('Witte Muizen', '8719587328256', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Reuzen Slangen', '8719587325641', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Zoute Rijen', '8719587322739', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
-('Winegums', '8719587327527', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Drop Munten', '8719587322345', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Kruis Drop', '8719587322265', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Zoute Ruitjes', '8719587323256', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6));
