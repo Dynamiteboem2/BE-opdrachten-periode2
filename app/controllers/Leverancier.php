@@ -97,7 +97,7 @@ class Leverancier extends BaseController
                 // Validated
                 if ($this->leverancierModel->updateProduct($data['id'], $data['aantal'], $data['datum'])) {
                     flash('levering_message', 'Product levering bijgewerkt');
-                    redirect('leverancier/geleverdeProducten');
+                    redirect('leverancier/geleverdeProducten/' . $id);
                 } else {
                     die('Er is iets misgegaan');
                 }
@@ -107,13 +107,15 @@ class Leverancier extends BaseController
             }
         } else {
             $product = $this->leverancierModel->getProductById($id);
+            $leverancier = $this->leverancierModel->getLeverancierByProductId($id);
 
             $data = [
                 'id' => $id,
                 'aantal' => '',
                 'datum' => '',
                 'aantal_err' => '',
-                'datum_err' => ''
+                'datum_err' => '',
+                'leverancier' => $leverancier
             ];
 
             $this->view('leverancier/nieuweLevering', $data);

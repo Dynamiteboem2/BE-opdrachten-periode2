@@ -55,4 +55,17 @@ class LeverancierModel
         $this->db->bind(':id', $id);
         return $this->db->single();
     }
+
+    public function getLeverancierByProductId($productId) {
+        $this->db->query('
+            SELECT l.Naam, l.Contactpersoon, l.Mobiel, COUNT(p.Id) AS AantalProducten, MAX(pl.DatumLevering) AS DatumEerstVolgendeLevering
+            FROM Leverancier l
+            JOIN ProductPerLeverancier pl ON l.Id = pl.LeverancierId
+            JOIN Product p ON pl.ProductId = p.Id
+            WHERE p.Id = :productId
+            GROUP BY l.Naam, l.Contactpersoon, l.Mobiel
+        ');
+        $this->db->bind(':productId', $productId);
+        return $this->db->single();
+    }
 }
