@@ -66,7 +66,7 @@ INSERT INTO `Product` (`Naam`, `Barcode`, `Verpakkingseenheid`, `IsActief`, `Opm
 ('Mintnopjes', '8719587231278', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Schoolkrijt', '8719587326713', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Honingdrop', '8719587327836', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
-('Zure Beren', '8719587321441', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
+('Zure Beren', '8719587321441', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),  
 ('Cola Flesjes', '8719587321237', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Turtles', '8719587322245', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
 ('Witte Muizen', '8719587328256', 'Stuk', 1, NULL, SYSDATE(6), SYSDATE(6)),
