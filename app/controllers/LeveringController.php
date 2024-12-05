@@ -36,7 +36,7 @@ class LeveringController extends Controller {
                 }
             } else {
                 // Load view with errors
-                $this->view('levering/nieuweLevering', $data);
+                $this->view('leverancier/nieuweLevering', $data);
             }
         } else {
             $product = $this->leveringModel->getProductById($id);
@@ -49,7 +49,7 @@ class LeveringController extends Controller {
                 'datum_err' => ''
             ];
 
-            $this->view('levering/nieuweLevering', $data);
+            $this->view('leverancier/nieuweLevering', $data);
         }
     }
 }

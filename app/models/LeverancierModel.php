@@ -41,4 +41,18 @@ class LeverancierModel
             throw new Exception("Database query failed: " . $e->getMessage());
         }
     }
+
+    public function updateProduct($id, $aantal, $datum) {
+        $this->db->query('UPDATE Magazijn SET AantalAanwezig = AantalAanwezig + :aantal, DatumGewijzigd = :datum WHERE ProductId = :id');
+        $this->db->bind(':id', $id);
+        $this->db->bind(':aantal', $aantal);
+        $this->db->bind(':datum', $datum);
+        return $this->db->execute();
+    }
+
+    public function getProductById($id) {
+        $this->db->query('SELECT * FROM Product WHERE Id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->single();
+    }
 }
