@@ -1,5 +1,13 @@
 <?php require_once APPROOT . '/views/includes/header.php'; ?>
 
+<style>
+    .text-right {
+    display: flex;
+    justify-content: flex-end; /* Zorgt ervoor dat de inhoud naar rechts uitgelijnd wordt */
+    gap: 10px; /* Ruimte tussen de knoppen */
+}
+</style>
+
 <div class="container">
     <div class="row mt-3">
         <div class="col-12">
@@ -47,7 +55,7 @@
                                     <td><?= $leverancier->AantalProducten ?></td>
                                     <td class='text-center'>
                                         <!-- Link naar geleverde producten -->
-                                        <a href='<?= URLROOT . "/Leverancier/geleverdeProducten/$leverancier->Id" ?>'>
+                                        <a href='<?= URLROOT . "/leverancier/geleverdeProducten/$leverancier->Id" ?>' class='btn btn-info'>
                                             <i class='bi bi-box-seam'></i>
                                         </a>
                                     </td>            
@@ -56,10 +64,15 @@
                         } ?>
                     </tbody>
                 </table>
-                <a href="<?= URLROOT; ?>/homepages/index">Homepage</a>
             </div>
         </div>
     <?php } ?>
+
+    <div class="row mt-3">
+        <div class="col-12 text-right">
+            <a href="<?= URLROOT; ?>" class="btn btn-primary">Home</a>
+        </div>
+    </div>
 </div>
 
 <?php require_once APPROOT . '/views/includes/footer.php'; ?>
