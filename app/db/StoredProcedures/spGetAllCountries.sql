@@ -14,7 +14,7 @@ DROP PROCEDURE IF EXISTS spGetAllCountries;
 -- Verander even tijdelijk de opdrachtprompt naar //
 DELIMITER //
 
-CREATE PROCEDURE spGetAllCountries()
+CREATE PROCEDURE spGetAllCountries()    
 BEGIN
 
     SELECT  COUN.Id,
