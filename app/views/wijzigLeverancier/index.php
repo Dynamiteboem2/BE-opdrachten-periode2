@@ -12,7 +12,7 @@
     <div class="row mt-3">
         <div class="col-12">
             <!-- Titel van de pagina -->
-            <h3><?php echo $data['title']; ?></h3>
+            <h3>Wijzig Leverancier</h3>
         </div>
     </div>
 
@@ -36,6 +36,7 @@
                             <th>Contactpersoon</th>
                             <th>Leveranciernummer</th>
                             <th>Mobiel</th>
+                            <th>Acties</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,8 +51,7 @@
                                     <td><?= $leverancier->Contactpersoon ?></td>
                                     <td><?= $leverancier->Leveranciernummer ?></td>
                                     <td><?= $leverancier->Mobiel ?></td>
-
-                                    </td>            
+                                    <td><a href="<?= URLROOT; ?>/wijzigLeverancier/wijzig/<?= $leverancier->id ?>" class="btn btn-warning">Wijzig</a></td>
                                 </tr>
                             <?php } 
                         } ?>

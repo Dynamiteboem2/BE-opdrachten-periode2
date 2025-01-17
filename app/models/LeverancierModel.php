@@ -93,8 +93,7 @@ class LeverancierModel
                 JOIN ProductPerLeverancier pl ON l.Id = pl.LeverancierId
                 JOIN Product p ON pl.ProductId = p.Id
                 WHERE p.Id = :productId
-                GROUP BY l.Naam, l.Contactpersoon, l.Mobiel, l.Leveranciernummer
-            ';
+                GROUP BY l.Id';
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
             $stmt->execute();
@@ -126,24 +125,25 @@ class LeverancierModel
 
     public function updateLeverancier($data)
     {
-        $this->db->query('UPDATE leveranciers SET Naam = :naam, Contactpersoon = :contactpersoon, Leveranciernummer = :leveranciernummer, Mobiel = :mobiel, Straatnaam = :straatnaam, Huisnummer = :huisnummer, Postcode = :postcode, Stad = :stad WHERE id = :id');
-        // Bind values
-        $this->db->bind(':id', $data['id']);
-        $this->db->bind(':naam', $data['naam']);
-        $this->db->bind(':contactpersoon', $data['contactpersoon']);
-        $this->db->bind(':leveranciernummer', $data['leveranciernummer']);
-        $this->db->bind(':mobiel', $data['mobiel']);
-        $this->db->bind(':straatnaam', $data['straatnaam']);
-        $this->db->bind(':huisnummer', $data['huisnummer']);
-        $this->db->bind(':postcode', $data['postcode']);
-        $this->db->bind(':stad', $data['stad']);
-    
-        // Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
+        try {
+            $sql = 'UPDATE leveranciers SET Naam = :naam, Contactpersoon = :contactpersoon, Leveranciernummer = :leveranciernummer, Mobiel = :mobiel, Straatnaam = :straatnaam, Huisnummer = :huisnummer, Postcode = :postcode, Stad = :stad WHERE id = :id';
+            $stmt = $this->db->prepare($sql);
+            // Bind values
+            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
+            $stmt->bindParam(':naam', $data['naam'], PDO::PARAM_STR);
+            $stmt->bindParam(':contactpersoon', $data['contactpersoon'], PDO::PARAM_STR);
+            $stmt->bindParam(':leveranciernummer', $data['leveranciernummer'], PDO::PARAM_STR);
+            $stmt->bindParam(':mobiel', $data['mobiel'], PDO::PARAM_STR);
+            $stmt->bindParam(':straatnaam', $data['straatnaam'], PDO::PARAM_STR);
+            $stmt->bindParam(':huisnummer', $data['huisnummer'], PDO::PARAM_STR);
+            $stmt->bindParam(':postcode', $data['postcode'], PDO::PARAM_STR);
+            $stmt->bindParam(':stad', $data['stad'], PDO::PARAM_STR);
+            // Execute
+            return $stmt->execute();
+        } catch (Exception $e) {
+            // Log de fout en gooi een nieuwe uitzondering
+            error_log("Fout in updateLeverancier: " . $e->getMessage());
+            throw new Exception("Database query failed: " . $e->getMessage());
         }
     }
-
 }
