@@ -107,11 +107,16 @@ class LeverancierModel
         }
     }
 
-    public function getLeverancierById($leverancierId) {
+    public function getLeverancierById($id)
+    {
         try {
-            $sql = 'SELECT * FROM Leverancier WHERE Id = :leverancierId';
+            // SQL-query om een specifieke leverancier en bijbehorende contactgegevens op te halen
+            $sql = "SELECT l.id, l.naam, l.contactpersoon, l.leveranciernummer, l.mobiel, c.Straat AS straatnaam, c.Huisnummer AS huisnummer, c.Postcode AS postcode, c.Stad AS stad
+                    FROM leverancier l
+                    LEFT JOIN contact c ON l.id = c.id
+                    WHERE l.id = :id";
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':leverancierId', $leverancierId, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_OBJ);
             $stmt->closeCursor(); // Sluit de vorige resultaatset
@@ -126,21 +131,36 @@ class LeverancierModel
     public function updateLeverancier($data)
     {
         try {
-            $sql = 'UPDATE leveranciers SET Naam = :naam, Contactpersoon = :contactpersoon, Leveranciernummer = :leveranciernummer, Mobiel = :mobiel, Straatnaam = :straatnaam, Huisnummer = :huisnummer, Postcode = :postcode, Stad = :stad WHERE id = :id';
-            $stmt = $this->db->prepare($sql);
-            // Bind values
-            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
-            $stmt->bindParam(':naam', $data['naam'], PDO::PARAM_STR);
-            $stmt->bindParam(':contactpersoon', $data['contactpersoon'], PDO::PARAM_STR);
-            $stmt->bindParam(':leveranciernummer', $data['leveranciernummer'], PDO::PARAM_STR);
-            $stmt->bindParam(':mobiel', $data['mobiel'], PDO::PARAM_STR);
-            $stmt->bindParam(':straatnaam', $data['straatnaam'], PDO::PARAM_STR);
-            $stmt->bindParam(':huisnummer', $data['huisnummer'], PDO::PARAM_STR);
-            $stmt->bindParam(':postcode', $data['postcode'], PDO::PARAM_STR);
-            $stmt->bindParam(':stad', $data['stad'], PDO::PARAM_STR);
-            // Execute
-            return $stmt->execute();
+            // Begin een transactiesessie
+            $this->db->beginTransaction();
+
+            // SQL-query om de leveranciergegevens bij te werken
+            $sql1 = "UPDATE leverancier SET naam = :naam, contactpersoon = :contactpersoon, leveranciernummer = :leveranciernummer, mobiel = :mobiel WHERE id = :id";
+            $stmt1 = $this->db->prepare($sql1);
+            $stmt1->bindParam(':id', $data['id'], PDO::PARAM_INT);
+            $stmt1->bindParam(':naam', $data['naam'], PDO::PARAM_STR);
+            $stmt1->bindParam(':contactpersoon', $data['contactpersoon'], PDO::PARAM_STR);
+            $stmt1->bindParam(':leveranciernummer', $data['leveranciernummer'], PDO::PARAM_STR);
+            $stmt1->bindParam(':mobiel', $data['mobiel'], PDO::PARAM_STR);
+            $stmt1->execute();
+
+            // SQL-query om de contactgegevens bij te werken
+            $sql2 = "UPDATE contact SET Straat = :straatnaam, Huisnummer = :huisnummer, Postcode = :postcode, Stad = :stad WHERE id = :id";
+            $stmt2 = $this->db->prepare($sql2);
+            $stmt2->bindParam(':id', $data['id'], PDO::PARAM_INT);
+            $stmt2->bindParam(':straatnaam', $data['straatnaam'], PDO::PARAM_STR);
+            $stmt2->bindParam(':huisnummer', $data['huisnummer'], PDO::PARAM_STR);
+            $stmt2->bindParam(':postcode', $data['postcode'], PDO::PARAM_STR);
+            $stmt2->bindParam(':stad', $data['stad'], PDO::PARAM_STR);
+            $stmt2->execute();
+
+            // Commit de transactiesessie
+            $this->db->commit();
+
+            return true;
         } catch (Exception $e) {
+            // Rollback de transactiesessie bij een fout
+            $this->db->rollBack();
             // Log de fout en gooi een nieuwe uitzondering
             error_log("Fout in updateLeverancier: " . $e->getMessage());
             throw new Exception("Database query failed: " . $e->getMessage());
