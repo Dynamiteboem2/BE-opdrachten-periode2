@@ -2,10 +2,10 @@
 
 <style>
     .text-right {
-    display: flex;
-    justify-content: flex-end; /* Zorgt ervoor dat de inhoud naar rechts uitgelijnd wordt */
-    gap: 10px; /* Ruimte tussen de knoppen */
-}
+        display: flex;
+        justify-content: flex-end; /* Zorgt ervoor dat de inhoud naar rechts uitgelijnd wordt */
+        gap: 10px; /* Ruimte tussen de knoppen */
+    }
 </style>
 
 <div class="container">
@@ -51,7 +51,11 @@
                                     <td><?= $leverancier->Contactpersoon ?></td>
                                     <td><?= $leverancier->Leveranciernummer ?></td>
                                     <td><?= $leverancier->Mobiel ?></td>
-                                    <td><a href="<?= URLROOT; ?>/leverancier/wijzigLeverancier/<?= $leverancier->id ?>" class="btn btn-warning">Wijzig</a></td>
+                                    <td>
+                                        <a href="<?= URLROOT; ?>/leverancier/wijzigLeverancier/<?= $leverancier->id ?>" class="btn btn-warning">
+                                            <i class="fas fa-pencil-alt"></i> <!-- Potloodicoon -->
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php } 
                         } ?>

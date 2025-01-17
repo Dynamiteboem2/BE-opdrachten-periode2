@@ -68,60 +68,6 @@ class Leverancier extends BaseController
         $this->view('leverancier/wijzigenLeverancier', $data);
     }
 
-    public function geleverdeProducten($leverancierId)
-    {
-        // Initialiseer data array voor de view
-        $data = [
-            'title' => 'Geleverde Producten',
-            'producten' => NULL,
-            'leverancier' => NULL,
-            'message' => NULL
-        ];
-
-        try {
-            // Haal de geleverde producten van de specifieke leverancier op
-            $result = $this->leverancierModel->getGeleverdeProducten($leverancierId);
-
-            // Haal de gegevens van de leverancier op
-            $leverancier = $this->leverancierModel->getLeverancierById($leverancierId);
-
-            if (empty($result)) {
-                // Zet de foutmelding
-                $data['message'] = "Dit bedrijf heeft tot nu toe geen producten geleverd aan Jamin";
-            } else {
-                // Zet de opgehaalde data in de data array
-                $data['producten'] = $result;
-            }
-            $data['leverancier'] = $leverancier;
-        } catch (Exception $e) {
-            // Log de fout en zet de foutmelding in de data array
-            error_log($e->getMessage());
-            $data['message'] = "Er is een fout opgetreden in de database: " . $e->getMessage();
-            $data['leverancier'] = $this->leverancierModel->getLeverancierById($leverancierId);
-        }
-
-        // Laad de view met de data
-        $this->view('leverancier/geleverdeProducten', $data);
-    }
-
-    public function nieuweLevering($id)
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            $data = [
-                'id' => $id,
-                'aantal' => trim($_POST['aantal']),
-                'datum' => trim($_POST['datum']),
-                'aantal_err' => '',
-                'datum_err' => '',
-            ];
-
-            $this->view('leverancier/nieuweLevering', $data);
-        }
-    }
-
     public function wijzigLeverancier($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -192,11 +138,6 @@ class Leverancier extends BaseController
             // Get existing leverancier from model
             $leverancier = $this->leverancierModel->getLeverancierById($id);
 
-            // Check for owner
-            if ($leverancier->user_id != $_SESSION['user_id']) {
-                redirect('leverancier');
-            }
-
             $data = [
                 'id' => $id,
                 'naam' => $leverancier->naam,
@@ -210,6 +151,60 @@ class Leverancier extends BaseController
             ];
 
             $this->view('leverancier/wijzigLeverancier', $data);
+        }
+    }
+
+    public function geleverdeProducten($leverancierId)
+    {
+        // Initialiseer data array voor de view
+        $data = [
+            'title' => 'Geleverde Producten',
+            'producten' => NULL,
+            'leverancier' => NULL,
+            'message' => NULL
+        ];
+
+        try {
+            // Haal de geleverde producten van de specifieke leverancier op
+            $result = $this->leverancierModel->getGeleverdeProducten($leverancierId);
+
+            // Haal de gegevens van de leverancier op
+            $leverancier = $this->leverancierModel->getLeverancierById($leverancierId);
+
+            if (empty($result)) {
+                // Zet de foutmelding
+                $data['message'] = "Dit bedrijf heeft tot nu toe geen producten geleverd aan Jamin";
+            } else {
+                // Zet de opgehaalde data in de data array
+                $data['producten'] = $result;
+            }
+            $data['leverancier'] = $leverancier;
+        } catch (Exception $e) {
+            // Log de fout en zet de foutmelding in de data array
+            error_log($e->getMessage());
+            $data['message'] = "Er is een fout opgetreden in de database: " . $e->getMessage();
+            $data['leverancier'] = $this->leverancierModel->getLeverancierById($leverancierId);
+        }
+
+        // Laad de view met de data
+        $this->view('leverancier/geleverdeProducten', $data);
+    }
+
+    public function nieuweLevering($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $data = [
+                'id' => $id,
+                'aantal' => trim($_POST['aantal']),
+                'datum' => trim($_POST['datum']),
+                'aantal_err' => '',
+                'datum_err' => '',
+            ];
+
+            $this->view('leverancier/nieuweLevering', $data);
         }
     }
 }
