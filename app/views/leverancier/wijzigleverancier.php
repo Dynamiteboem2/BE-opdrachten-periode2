@@ -55,10 +55,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="<?= URLROOT; ?>/leverancier/bewerkLeverancier/<?= $data['id']; ?>" class="btn btn-warning">Wijzig Leverancier</a>
+                        <a href="<?= URLROOT; ?>/leverancier/bewerkLeverancier/<?= $data['id']; ?>" class="btn btn-warning">Wijzig</a>
                     </td>
                     <td class="text-right">
-                        <a href="<?= URLROOT; ?>/leverancier/wijzigenLeverancier" class="btn btn-secondary">Terug naar Wijzigen Leverancier</a>
+                        <a href="<?= URLROOT; ?>/leverancier/wijzigenLeverancier" class="btn btn-secondary">Terug naar overzicht Leverancier</a>
                         <a href="<?= URLROOT; ?>" class="btn btn-primary">Home</a>
                     </td>
                 </tr>

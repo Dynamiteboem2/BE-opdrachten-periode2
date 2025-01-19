@@ -86,7 +86,7 @@ class Leverancier extends BaseController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+    
             $data = [
                 'id' => $id,
                 'naam' => trim($_POST['naam']),
@@ -105,60 +105,84 @@ class Leverancier extends BaseController
                 'huisnummer_err' => '',
                 'postcode_err' => '',
                 'stad_err' => '',
+                'error_message' => '',
                 'success_message' => ''
             ];
-
-            // Validate inputs
-            if (empty($data['naam'])) {
-                $data['naam_err'] = 'Vul een naam in';
-            }
-            if (empty($data['contactpersoon'])) {
-                $data['contactpersoon_err'] = 'Vul een contactpersoon in';
-            }
-            if (empty($data['leveranciernummer'])) {
-                $data['leveranciernummer_err'] = 'Vul een leveranciernummer in';
-            }
-            if (empty($data['mobiel'])) {
-                $data['mobiel_err'] = 'Vul een mobiel nummer in';
-            }
-            if (empty($data['straatnaam'])) {
-                $data['straatnaam_err'] = 'Vul een straatnaam in';
-            }
-            if (empty($data['huisnummer'])) {
-                $data['huisnummer_err'] = 'Vul een huisnummer in';
-            }
-            if (empty($data['postcode'])) {
-                $data['postcode_err'] = 'Vul een postcode in';
-            }
-            if (empty($data['stad'])) {
-                $data['stad_err'] = 'Vul een stad in';
-            }
-
-            // Check if all errors are empty
-            if (empty($data['naam_err']) && empty($data['contactpersoon_err']) && empty($data['leveranciernummer_err']) && empty($data['mobiel_err']) && empty($data['straatnaam_err']) && empty($data['huisnummer_err']) && empty($data['postcode_err']) && empty($data['stad_err'])) {
-                // Update leverancier
-                if ($this->leverancierModel->updateLeverancier($data)) {
-                    // Set success message
-                    $data['success_message'] = 'De wijzigingen zijn doorgevoerd';
-                    // Load the view with the success message
-                    $this->view('leverancier/bewerkLeverancier', $data);
-                    // Redirect to wijzigLeverancier page with delay
-                    echo "<script>
-                            setTimeout(function(){
-                                window.location.href = '" . URLROOT . "/leverancier/wijzigLeverancier/$id';
-                            }, 3000);
-                          </script>";
-                } else {
-                    die('Er is iets misgegaan');
-                }
-            } else {
-                // Load view with errors
+    
+            // Check if the leverancier is "De Bron"
+            if ($data['naam'] === 'De Bron') {
+                // Set error message
+                $data['error_message'] = 'Door een technische storing is het niet mogelijk de wijziging door te voeren. Probeer het op een later moment nog eens.';
+                // Load the view with the error message
                 $this->view('leverancier/bewerkLeverancier', $data);
+                // Redirect to wijzigLeverancier page with delay
+                echo "<script>
+                        setTimeout(function(){
+                            window.location.href = '" . URLROOT . "/leverancier/wijzigLeverancier/$id';
+                        }, 3000);
+                      </script>";
+            } else {
+                // Validate inputs
+                if (empty($data['naam'])) {
+                    $data['naam_err'] = 'Vul een naam in';
+                }
+                if (empty($data['contactpersoon'])) {
+                    $data['contactpersoon_err'] = 'Vul een contactpersoon in';
+                }
+                if (empty($data['leveranciernummer'])) {
+                    $data['leveranciernummer_err'] = 'Vul een leveranciernummer in';
+                }
+                if (empty($data['mobiel'])) {
+                    $data['mobiel_err'] = 'Vul een mobiel nummer in';
+                }
+                if (empty($data['straatnaam'])) {
+                    $data['straatnaam_err'] = 'Vul een straatnaam in';
+                }
+                if (empty($data['huisnummer'])) {
+                    $data['huisnummer_err'] = 'Vul een huisnummer in';
+                }
+                if (empty($data['postcode'])) {
+                    $data['postcode_err'] = 'Vul een postcode in';
+                }
+                if (empty($data['stad'])) {
+                    $data['stad_err'] = 'Vul een stad in';
+                }
+    
+                // Check if all errors are empty
+                if (empty($data['naam_err']) && empty($data['contactpersoon_err']) && empty($data['leveranciernummer_err']) && empty($data['mobiel_err']) && empty($data['straatnaam_err']) && empty($data['huisnummer_err']) && empty($data['postcode_err']) && empty($data['stad_err'])) {
+                    // Update leverancier
+                    if ($this->leverancierModel->updateLeverancier($data)) {
+                        // Set success message
+                        $data['success_message'] = 'De wijzigingen zijn doorgevoerd';
+                        // Load the view with the success message
+                        $this->view('leverancier/wijzigLeverancier', $data);
+                        // Redirect to wijzigLeverancier page with delay
+                        echo "<script>
+                                setTimeout(function(){
+                                    window.location.href = '" . URLROOT . "/leverancier/wijzigLeverancier/$id';
+                                }, 3000);
+                              </script>";
+                    } else {
+                        // Set error message
+                        $data['error_message'] = 'Door een technische storing is het niet mogelijk de wijziging door te voeren. Probeer het op een later moment nog eens.';
+                        // Load the view with the error message
+                        $this->view('leverancier/bewerkLeverancier', $data);
+                        // Redirect to wijzigLeverancier page with delay
+                        echo "<script>
+                                setTimeout(function(){
+                                    window.location.href = '" . URLROOT . "/leverancier/wijzigLeverancier/$id';
+                                }, 3000);
+                              </script>";
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('leverancier/bewerkLeverancier', $data);
+                }
             }
         } else {
             // Get existing leverancier from model
             $leverancier = $this->leverancierModel->getLeverancierById($id);
-
+    
             $data = [
                 'id' => $id,
                 'naam' => $leverancier->naam,
@@ -169,9 +193,10 @@ class Leverancier extends BaseController
                 'huisnummer' => $leverancier->huisnummer,
                 'postcode' => $leverancier->postcode,
                 'stad' => $leverancier->stad,
+                'error_message' => '',
                 'success_message' => ''
             ];
-
+    
             $this->view('leverancier/bewerkLeverancier', $data);
         }
     }
