@@ -39,36 +39,49 @@ class Leverancier extends BaseController
         $this->view('leverancier/index', $data);
     }
 
-    public function wijzigenLeverancier()
+    public function wijzigenLeverancier($page = 1)
     {
-        // Initialiseer data array voor de view
+        $perPage = 4; // Aantal leveranciers per pagina
+        $offset = ($page - 1) * $perPage;
+
+        // Haal het totale aantal leveranciers op
+        $totalLeveranciers = $this->leverancierModel->getTotalLeveranciers();
+        $totalPages = ceil($totalLeveranciers / $perPage);
+
+        // Haal de leveranciers voor de huidige pagina op
+        $leveranciers = $this->leverancierModel->getLeveranciersByPage($perPage, $offset);
+
         $data = [
             'title' => 'Wijzig Leverancier',
-            'leveranciers' => NULL,
-            'message' => NULL
+            'leveranciers' => $leveranciers,
+            'currentPage' => $page,
+            'totalPages' => $totalPages
         ];
 
-        try {
-            // Haal alle leveranciers op
-            $result = $this->leverancierModel->getAllLeveranciers();
-
-            if (empty($result)) {
-                throw new Exception("Geen resultaten gevonden");
-            }
-
-            // Zet de opgehaalde data in de data array
-            $data['leveranciers'] = $result;
-        } catch (Exception $e) {
-            // Log de fout en zet de foutmelding in de data array
-            error_log($e->getMessage());
-            $data['message'] = "Er is een fout opgetreden in de database: " . $e->getMessage();
-        }
-
-        // Laad de view met de data
         $this->view('leverancier/wijzigenLeverancier', $data);
     }
 
     public function wijzigLeverancier($id)
+    {
+        // Get existing leverancier from model
+        $leverancier = $this->leverancierModel->getLeverancierById($id);
+
+        $data = [
+            'id' => $id,
+            'naam' => $leverancier->naam,
+            'contactpersoon' => $leverancier->contactpersoon,
+            'leveranciernummer' => $leverancier->leveranciernummer,
+            'mobiel' => $leverancier->mobiel,
+            'straatnaam' => $leverancier->straatnaam,
+            'huisnummer' => $leverancier->huisnummer,
+            'postcode' => $leverancier->postcode,
+            'stad' => $leverancier->stad
+        ];
+
+        $this->view('leverancier/wijzigLeverancier', $data);
+    }
+
+    public function bewerkLeverancier($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Sanitize POST data
@@ -91,7 +104,8 @@ class Leverancier extends BaseController
                 'straatnaam_err' => '',
                 'huisnummer_err' => '',
                 'postcode_err' => '',
-                'stad_err' => ''
+                'stad_err' => '',
+                'success_message' => ''
             ];
 
             // Validate inputs
@@ -124,15 +138,22 @@ class Leverancier extends BaseController
             if (empty($data['naam_err']) && empty($data['contactpersoon_err']) && empty($data['leveranciernummer_err']) && empty($data['mobiel_err']) && empty($data['straatnaam_err']) && empty($data['huisnummer_err']) && empty($data['postcode_err']) && empty($data['stad_err'])) {
                 // Update leverancier
                 if ($this->leverancierModel->updateLeverancier($data)) {
-                    // Redirect to leverancier details page
-                    flash('leverancier_message', 'De wijzigingen zijn doorgevoerd');
-                    redirect('leverancier/details/' . $id);
+                    // Set success message
+                    $data['success_message'] = 'De wijzigingen zijn doorgevoerd';
+                    // Load the view with the success message
+                    $this->view('leverancier/bewerkLeverancier', $data);
+                    // Redirect to wijzigLeverancier page with delay
+                    echo "<script>
+                            setTimeout(function(){
+                                window.location.href = '" . URLROOT . "/leverancier/wijzigLeverancier/$id';
+                            }, 3000);
+                          </script>";
                 } else {
                     die('Er is iets misgegaan');
                 }
             } else {
                 // Load view with errors
-                $this->view('leverancier/wijzigLeverancier', $data);
+                $this->view('leverancier/bewerkLeverancier', $data);
             }
         } else {
             // Get existing leverancier from model
@@ -147,10 +168,11 @@ class Leverancier extends BaseController
                 'straatnaam' => $leverancier->straatnaam,
                 'huisnummer' => $leverancier->huisnummer,
                 'postcode' => $leverancier->postcode,
-                'stad' => $leverancier->stad
+                'stad' => $leverancier->stad,
+                'success_message' => ''
             ];
 
-            $this->view('leverancier/wijzigLeverancier', $data);
+            $this->view('leverancier/bewerkLeverancier', $data);
         }
     }
 
