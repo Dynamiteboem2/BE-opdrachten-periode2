@@ -13,7 +13,7 @@ class AllergeenModel {
 
     public function getProductenMetAllergeen($allergeenId) {
         $this->db->query('
-            SELECT p.Naam AS productNaam, a.Naam AS allergeenNaam, a.Omschrijving, m.AantalAanwezig 
+            SELECT p.Id AS productId, p.Naam AS productNaam, a.Naam AS allergeenNaam, a.Omschrijving, m.AantalAanwezig 
             FROM product p
             JOIN productperallergeen ppa ON p.Id = ppa.ProductId
             JOIN allergeen a ON a.Id = ppa.AllergeenId

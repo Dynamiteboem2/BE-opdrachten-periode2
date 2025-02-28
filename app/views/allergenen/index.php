@@ -52,7 +52,7 @@
                                 <td><?= $product->allergeenNaam; ?></td>
                                 <td><?= $product->Omschrijving; ?></td>
                                 <td><?= $product->AantalAanwezig; ?></td>
-                                <td><a href="#"><img src="<?= URLROOT; ?>/img/questionmark.png" alt="Info" style="width: 20px; height: 20px;"></a></td>
+                                <td><a href="<?= URLROOT; ?>/leverancier/overzicht/<?= $product->productId; ?>"><img src="<?= URLROOT; ?>/img/questionmark.png" alt="Info" style="width: 20px; height: 20px;"></a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -60,6 +60,12 @@
             </div>
         </div>
     <?php endif; ?>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <a href="<?= URLROOT; ?>" class="btn btn-secondary">Terug naar homepage</a>
+        </div>
+    </div>
 </div>
 
 <?php require_once APPROOT . '/views/includes/footer.php'; ?>
