@@ -142,36 +142,7 @@ INSERT INTO `contact` (`Id`, `Straat`, `Huisnummer`, `Postcode`, `Stad`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Tabelstructuur voor tabel `country`
---
 
-DROP TABLE IF EXISTS `country`;
-CREATE TABLE IF NOT EXISTS `country` (
-  `Id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Name` varchar(250) NOT NULL,
-  `CapitalCity` varchar(250) NOT NULL,
-  `Continent` varchar(250) NOT NULL,
-  `Population` int UNSIGNED NOT NULL,
-  `Zipcode` varchar(6) NOT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Gegevens worden geëxporteerd voor tabel `country`
---
-
-INSERT INTO `country` (`Id`, `Name`, `CapitalCity`, `Continent`, `Population`, `Zipcode`) VALUES
-(1, 'Nederland', 'Amsterdam', 'Europa', 18000000, '2309CB'),
-(2, 'Argentini&euml;', 'Buenos Aires', 'Zuid-Amerika', 429496729, '2309CC'),
-(4, 'Japan', 'Tokio', 'Azi&euml;', 125700000, '8761EE'),
-(5, 'Zwitserlandd', 'Bern', 'Europa', 8703000, '2345RR'),
-(6, 'Noorwegen', 'Oslo', 'Europa', 5550203, '2314UT'),
-(11, 'Litouwen', 'Vilnius', 'Europa', 340000000, '9382YY'),
-(15, 'Marokko', 'Rabat', 'Afrika', 37500000, '1243HH'),
-(16, 'Nepal', 'Kathmandu', 'Azi&euml;', 30000000, '6534GG'),
-(17, 'Chili', 'Santiago', 'Zuid-Amerika', 18276870, '8347AA'),
-(18, 'Japan', 'Tokio', 'Azi&euml;', 125700000, '2342TT');
 
 -- --------------------------------------------------------
 
@@ -202,7 +173,8 @@ INSERT INTO `leverancier` (`Id`, `Naam`, `Contactpersoon`, `Leveranciernummer`, 
 (2, 'Astra Sweets', 'Jasper del Monte', 'L102928431', '06-3', b'1', NULL, '2024-12-05 16:18:16.078402', '2024-12-05 16:18:16.078402'),
 (3, 'Haribo', 'Sven Stalman', 'L1029324748', '06-24383291', b'1', NULL, '2024-12-05 16:18:16.078418', '2024-12-05 16:18:16.078418'),
 (4, 'Basset', 'Joyce Stelterberg', 'L1023845773', '06-48293823', b'1', NULL, '2024-12-05 16:18:16.078423', '2024-12-05 16:18:16.078423'),
-(5, 'De Bron', 'Remco Veenstra', 'L1023857736', '06-34291', b'1', NULL, '2024-12-05 16:18:16.078428', '2024-12-05 16:18:16.078428');
+(5, 'De Bron', 'Remco Veenstra', 'L1023857736', '06-34291', b'1', NULL, '2024-12-05 16:18:16.078428', '2024-12-05 16:18:16.078428'),
+(6, 'Hom Ken Food', 'Hom Ken', 'L1029234599', '06-23458477', b'1', NULL, '2024-12-05 16:18:16.078428', '2024-12-05 16:18:16.078428');
 
 -- --------------------------------------------------------
 
@@ -358,7 +330,8 @@ INSERT INTO `productperleverancier` (`Id`, `LeverancierId`, `ProductId`, `DatumL
 (14, 5, 11, '2024-10-10', 47, '2024-10-17', b'1', NULL, '2024-12-05 16:18:16.151263', '2024-12-05 16:18:16.151263'),
 (15, 5, 11, '2024-10-19', 60, '2024-10-26', b'1', NULL, '2024-12-05 16:18:16.151271', '2024-12-05 16:18:16.151271'),
 (16, 5, 12, '2024-10-11', 45, '0000-00-00', b'1', NULL, '2024-12-05 16:18:16.151281', '2024-12-05 16:18:16.151281'),
-(17, 5, 13, '2024-10-12', 23, '0000-00-00', b'1', NULL, '2024-12-05 16:18:16.151292', '2024-12-05 16:18:16.151292');
+(17, 5, 13, '2024-10-12', 23, '0000-00-00', b'1', NULL, '2024-12-05 16:18:16.151292', '2024-12-05 16:18:16.151292'),
+(18, 6, 14, '2025-03-01', 100, '2025-03-15', b'1', NULL, '2025-03-01 00:00:00', '2025-03-01 00:00:00');
 
 --
 -- Beperkingen voor geëxporteerde tabellen

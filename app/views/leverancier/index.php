@@ -32,9 +32,13 @@
                             <td><?= $data['leverancier']->Naam; ?></td>
                             <td><?= $data['leverancier']->Contactpersoon; ?></td>
                             <td><?= $data['leverancier']->Mobiel; ?></td>
-                            <td><?= $data['leverancier']->Straat; ?></td>
-                            <td><?= $data['leverancier']->Huisnummer; ?></td>
-                            <td><?= $data['leverancier']->Stad; ?></td>
+                            <?php if ($data['leverancier']->AdresBericht): ?>
+                                <td colspan="3"><?= $data['leverancier']->AdresBericht; ?></td>
+                            <?php else: ?>
+                                <td><?= $data['leverancier']->Straat; ?></td>
+                                <td><?= $data['leverancier']->Huisnummer; ?></td>
+                                <td><?= $data['leverancier']->Stad; ?></td>
+                            <?php endif; ?>
                         </tr>
                     </tbody>
                 </table>
