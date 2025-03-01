@@ -22,7 +22,9 @@
                             <th>Naam</th>
                             <th>Contactpersoon</th>
                             <th>Mobiel</th>
-                            <th>Leveranciernummer</th>
+                            <th>Straat</th>
+                            <th>Huisnummer</th>
+                            <th>Stad</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +32,9 @@
                             <td><?= $data['leverancier']->Naam; ?></td>
                             <td><?= $data['leverancier']->Contactpersoon; ?></td>
                             <td><?= $data['leverancier']->Mobiel; ?></td>
-                            <td><?= $data['leverancier']->Leveranciernummer; ?></td>
+                            <td><?= $data['leverancier']->Straat; ?></td>
+                            <td><?= $data['leverancier']->Huisnummer; ?></td>
+                            <td><?= $data['leverancier']->Stad; ?></td>
                         </tr>
                     </tbody>
                 </table>

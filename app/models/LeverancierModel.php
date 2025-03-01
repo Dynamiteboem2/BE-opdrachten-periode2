@@ -86,9 +86,10 @@ class LeverancierModel
 
     public function getLeverancierByProductId($productId) {
         $this->db->query('
-            SELECT l.Naam, l.Contactpersoon, l.Mobiel, l.Leveranciernummer
+            SELECT l.Naam, l.Contactpersoon, l.Mobiel, c.Straat, c.Huisnummer, c.Stad
             FROM leverancier l
             JOIN productperleverancier ppl ON l.Id = ppl.LeverancierId
+            JOIN contact c ON l.Id = c.Id
             WHERE ppl.ProductId = :productId
         ');
         $this->db->bind(':productId', $productId);
