@@ -1,29 +1,24 @@
 <?php require_once APPROOT . '/views/includes/header.php'; ?>
 
 <div class="container">
-    <div class="row mt-3">
-        <div class="col-12">
+    <div class="row mt-3 align-items-center">
+        <div class="col-md-4">
             <h3>Overzicht Geleverde Producten</h3>
         </div>
-    </div>
-
-    <form action="<?= URLROOT; ?>/geleverdeproducten/index" method="post">
-        <div class="row mt-3">
-            <div class="col-6">
-                <label for="startdatum">Startdatum:</label>
-                <input type="date" id="startdatum" name="startdatum" class="form-control" required>
-            </div>
-            <div class="col-6">
-                <label for="einddatum">Einddatum:</label>
-                <input type="date" id="einddatum" name="einddatum" class="form-control" required>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12 text-right">
+        <div class="col-md-8 text-right">
+            <form action="<?= URLROOT; ?>/geleverdeproducten/index" method="post" class="form-inline justify-content-end">
+                <div class="form-group mr-2">
+                    <label for="startdatum" class="mr-2">Startdatum:</label>
+                    <input type="date" id="startdatum" name="startdatum" class="form-control" required>
+                </div>
+                <div class="form-group mr-2">
+                    <label for="einddatum" class="mr-2">Einddatum:</label>
+                    <input type="date" id="einddatum" name="einddatum" class="form-control" required>
+                </div>
                 <button type="submit" class="btn btn-primary">Maak selectie</button>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 
     <?php if (!empty($data['producten'])): ?>
         <div class="row mt-3">
@@ -55,7 +50,8 @@
     <?php else: ?>
         <div class="row mt-3">
             <div class="col-12">
-                <p>Er zijn geen geleverde producten gevonden.</p>
+                <p>Er zijn geen leveringen geweest van
+                producten in deze periode</p>
             </div>
         </div>
     <?php endif; ?>
