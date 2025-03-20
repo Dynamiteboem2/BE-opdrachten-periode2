@@ -40,7 +40,7 @@
                                 <td><?= $product->Contactpersoon; ?></td>
                                 <td><?= $product->ProductNaam; ?></td>
                                 <td><?= $product->TotaalGeleverd; ?></td>
-                                <td><a href="#"><img src="<?= URLROOT; ?>/img/questionmark.png" alt="Info" style="width: 20px; height: 20px;"></a></td>
+                                <td><a href="<?= URLROOT; ?>/productspecificatie/index/<?= $product->ProductId; ?>"><img src="<?= URLROOT; ?>/img/questionmark.png" alt="Info" style="width: 20px; height: 20px;"></a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -50,8 +50,7 @@
     <?php else: ?>
         <div class="row mt-3">
             <div class="col-12">
-                <p>Er zijn geen leveringen geweest van
-                producten in deze periode</p>
+                <p>Er zijn geen geleverde producten gevonden.</p>
             </div>
         </div>
     <?php endif; ?>
